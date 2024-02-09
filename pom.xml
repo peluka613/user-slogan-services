@@ -15,6 +15,12 @@
         <org.projectlombok.version>1.18.30</org.projectlombok.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+
+        <jacoco.coverage.check>true</jacoco.coverage.check>
+        <jacoco.coverage.rule>COVEREDRATIO</jacoco.coverage.rule>
+        <jacoco.coverage.element>BUNDLE</jacoco.coverage.element>
+        <jacoco.coverage.counter>INSTRUCTION</jacoco.coverage.counter>
+        <jacoco.coverage.minimum>0.90</jacoco.coverage.minimum>
     </properties>
 
     <parent>
@@ -96,6 +102,46 @@
                             <version>${lombok-mapstruct-binding.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <rules>
+                        <rule>
+                            <element>${jacoco.coverage.element}</element>
+                            <limits>
+                                <limit>
+                                    <counter>${jacoco.coverage.counter}</counter>
+                                    <value>${jacoco.coverage.rule}</value>
+                                    <minimum>${jacoco.coverage.minimum}</minimum>
+                                </limit>
+                            </limits>
+                        </rule>
+                    </rules>
+                    <excludes>
+                        <exclude>**/model/**</exclude>
+                        <exclude>**/mapper/**</exclude>
+                        <exclude>**/target/**</exclude>
+                        <exclude>**/Application*</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
