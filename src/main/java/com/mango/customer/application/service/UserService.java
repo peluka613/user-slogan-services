@@ -17,4 +17,14 @@ public class UserService {
 		UserDomain userDomain = userRepositoryPort.createUser(mapper.toDomain(user));
 		return mapper.toDto(userDomain);
 	}
+
+	public UserDTO updateUser(UserDTO user, String email) {
+		UserDomain userDomain = userRepositoryPort.updateUser(mapper.toDomain(user), email);
+		return mapper.toDto(userDomain);
+	}
+
+	public UserDTO findUserByEmail(String email) {
+		UserDomain userDomain = userRepositoryPort.findUserByEmail(email);
+		return mapper.toDto(userDomain);
+	}
 }
