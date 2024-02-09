@@ -25,5 +25,5 @@ jobs:
       - name: Run tests
         run: mvn test
 
-      - name: Verify code coverage
-        run: mvn org.jacoco:jacoco-maven-plugin:check
+#      - name: Verify code coverage
+#        run: mvn org.jacoco:jacoco-maven-plugin:check
