@@ -1,4 +1,4 @@
-package com.mango.customer;
+package com.mango.customer.infrastructure.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
