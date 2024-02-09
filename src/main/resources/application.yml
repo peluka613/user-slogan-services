@@ -13,3 +13,7 @@ spring:
       ddl-auto: create # Temporary for development purposes
     show-sql: true # Temporary for development purposes
 
+user:
+    slogans:
+        max_allowed: 3
+

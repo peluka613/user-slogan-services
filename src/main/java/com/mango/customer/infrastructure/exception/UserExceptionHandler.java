@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class UserExceptionHandler {
-	@ExceptionHandler({UserRegisterException.class, ConstraintViolationException.class, DataIntegrityViolationException.class})
-	public ResponseEntity<ErrorResponse> handleUserRegisterException(RuntimeException ex) {
+	@ExceptionHandler({UserRegisterException.class, SloganRegisterException.class, ConstraintViolationException.class,
+		DataIntegrityViolationException.class, MaxAllowedSlogansReachedException.class})
+	public ResponseEntity<ErrorResponse> handleRegisterException(RuntimeException ex) {
 		return createResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY, ex);
 	}
 
