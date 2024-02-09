@@ -36,7 +36,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 		UserEntity mappedUserEntity = mapper.toEntity(user);
 		mappedUserEntity.setId(userId);
 
-		userEntity = Optional.of(jpaRepository.save(mappedUserEntity));
+		userEntity = Optional.ofNullable(jpaRepository.save(mappedUserEntity));
 		return mapper.toDomain(userEntity.orElseThrow(() -> new UserRegisterException(user.getEmail())));
 	}
 
