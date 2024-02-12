@@ -14,6 +14,7 @@ nbproject/private/.classpath
 .factorypath
 .springBeans
 target
+!/libs
 
 
 

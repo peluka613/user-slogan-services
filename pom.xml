@@ -29,6 +29,18 @@
         <version>2.3.3.RELEASE</version>
         <relativePath/>
     </parent>
+
+    <repositories>
+        <repository>
+            <id>local-repo</id>
+            <url>file://${project.basedir}/libs</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -104,49 +116,63 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <rules>
+                        <rule>
+                            <element>${jacoco.coverage.element}</element>
+                            <limits>
+                                <limit>
+                                    <counter>${jacoco.coverage.counter}</counter>
+                                    <value>${jacoco.coverage.rule}</value>
+                                    <minimum>${jacoco.coverage.minimum}</minimum>
+                                </limit>
+                            </limits>
+                        </rule>
+                    </rules>
+                    <excludes>
+                        <exclude>**/model/**</exclude>
+                        <exclude>**/mapper/**</exclude>
+                        <exclude>**/target/**</exclude>
+                        <exclude>**/Application*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/libs</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-<!--            Commented out because in the DevSkiller fails the build in offline mode:-->
-<!--            [ERROR] Plugin org.jacoco:jacoco-maven-plugin:0.8.10 or one of its dependencies could not be resolved: Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.jacoco:jacoco-maven-plugin:jar:0.8.10 has not been downloaded from it before. -> [Help 1]-->
-<!--            <plugin>-->
-<!--                <groupId>org.jacoco</groupId>-->
-<!--                <artifactId>jacoco-maven-plugin</artifactId>-->
-<!--                <version>0.8.10</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>prepare-agent</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                    <execution>-->
-<!--                        <id>report</id>-->
-<!--                        <phase>prepare-package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>report</goal>-->
-<!--                            <goal>check</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <rules>-->
-<!--                        <rule>-->
-<!--                            <element>${jacoco.coverage.element}</element>-->
-<!--                            <limits>-->
-<!--                                <limit>-->
-<!--                                    <counter>${jacoco.coverage.counter}</counter>-->
-<!--                                    <value>${jacoco.coverage.rule}</value>-->
-<!--                                    <minimum>${jacoco.coverage.minimum}</minimum>-->
-<!--                                </limit>-->
-<!--                            </limits>-->
-<!--                        </rule>-->
-<!--                    </rules>-->
-<!--                    <excludes>-->
-<!--                        <exclude>**/model/**</exclude>-->
-<!--                        <exclude>**/mapper/**</exclude>-->
-<!--                        <exclude>**/target/**</exclude>-->
-<!--                        <exclude>**/Application*</exclude>-->
-<!--                    </excludes>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 </project>
